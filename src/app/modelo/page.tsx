@@ -27,7 +27,7 @@ export default function Page() {
       <div className="grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left m-2">
         <a
           // href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg m-3 border border-transparent px-5 py-4 transition-colors border-gray-300 bg-gray-100 dark:border-neutral-700 dark:bg-neutral-800/30"
+          className="group rounded-lg m-3 border border-transparent flex p-3 items-center mb-1 transition-colors border-gray-300 bg-gray-100 dark:border-neutral-700 dark:bg-neutral-800/30"
           target="_blank"
           rel="noopener noreferrer"
           style={{ borderRadius: "0 0 50% 50%", backgroundColor: "#fff9c4", color:"#000000", textAlign: 'center' }}
@@ -39,42 +39,37 @@ export default function Page() {
             </span>
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
           </p>
         </a>
 
         <a
           // href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg m-3 border border-transparent px-5 py-4 transition-colors border-gray-300 bg-gray-100 dark:border-neutral-700 dark:bg-neutral-800/30"
+          className="group rounded-lg m-3 border border-transparent flex p-3 items-center transition-colors border-gray-300 bg-gray-100 dark:border-neutral-700 dark:bg-neutral-800/30"
           target="_blank"
           rel="noopener noreferrer"
+          style={{ borderRadius: "0 50% 50% 0", backgroundColor: "#bbdefb", color:"#000000", textAlign: 'center' }}
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
+          <h2 className={`mb- text-2xl font-semibold`}>
+            [GO TO]{' '}
             <span className="inline-block transition-transform group-translate-x-1 motion-reduce:transform-none">
-              -&gt;
+              - lorem ipsum
             </span>
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
         </a>
 
         <a
-          // href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg m-3 border border-transparent px-5 py-4 transition-colors border-gray-300 bg-gray-100 dark:border-neutral-700 dark:bg-neutral-800/30"
+          // href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          className="group rounded-lg m-3 border border-transparent flex p-3 items-center transition-colors border-gray-300 bg-gray-100 dark:border-neutral-700 dark:bg-neutral-800/30"
           target="_blank"
           rel="noopener noreferrer"
+          style={{ borderRadius: "50% 0 0 50%", backgroundColor: "#ffe0b2", color:"#000000", textAlign: 'center' }}
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
+          <h2 className={`mb- text-2xl font-semibold`}>
+            [Redirect TO]{' '}
             <span className="inline-block transition-transform group-translate-x-1 motion-reduce:transform-none">
-              -&gt;
+              - lorem ipsum
             </span>
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
         </a>
 
         <a
