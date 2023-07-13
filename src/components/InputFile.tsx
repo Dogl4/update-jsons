@@ -1,23 +1,29 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
-import { Download, FileUpload } from '@mui/icons-material';
+import { Download, FileUpload } from "@mui/icons-material";
+import { editJson } from "../util/editJson";
 
 export default function InputFile() {
-  const [file, setFile] = useState();
+  const [file, setFile] = useState({ file: {}, name: "" }) as any;
+  const [hasJson, setHasJson] = useState();
 
   useEffect(() => {
     console.log("file", file as any);
+    setHasJson(file.file && Object.values(file.file).length);
   }, [file]);
 
-  const getFile = (e: any) => {
+  const getFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const currentFile = e.target.files[0];
 
-    if (currentFile && isJson(currentFile)) {
-      setFile(e.target.files[0]);
-    } else {
-      alert("Não entendi o json inserido");
+    if (e.target.files) {
+      const currentFile = e.target.files[0];
+      if (currentFile && isJson(currentFile)) {
+        const parsedData = (await readJsonFile(e.target.files[0])) as any;
+        setFile({ file: parsedData, name: currentFile.name });
+      } else {
+        alert("Não entendi o json inserido");
+      }
     }
   };
 
@@ -28,12 +34,33 @@ export default function InputFile() {
     return !!(type === TYPE_JSON && name.slice(-5) === END_TYPE_JSON);
   };
 
+  const readJsonFile = (file: Blob) =>
+    new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.onload = (event) => {
+        if (event.target) {
+          resolve(JSON.parse(event.target.result as string));
+        }
+      };
+
+      fileReader.onerror = (error) => reject(error);
+      fileReader.readAsText(file);
+    });
+
+  const exportJSON = (data: any) => {
+    return `data:text/json;chatset=utf-8,${encodeURIComponent(
+      JSON.stringify(data)
+    )}`;
+  };
+
+
   return (
     <div className="flex flex-col">
       <div className="flex space-x-4">
         <a
-          href={file}
-          download={(file as any)?.name}
+          href={exportJSON(file.file)}
+          download={file.name}
           target="_blank"
           rel="noreferrer"
         >
@@ -41,7 +68,7 @@ export default function InputFile() {
             variant="outlined"
             color="error"
             style={
-              !(file && (file as any)?.name)
+              !hasJson
                 ? {
                     backgroundColor: "#888788",
                     color: "#111",
@@ -50,29 +77,30 @@ export default function InputFile() {
                   }
                 : ({} as any)
             }
-            disabled={!(file && (file as any)?.name)}
+            disabled={!hasJson}
           >
-            <Download fontSize="small"/>
-            <span style={{ marginLeft: '8px' }}>
-              Json antigo
-            </span>
+            <Download fontSize="small" />
+            <span style={{ marginLeft: "8px" }}>Json antigo</span>
           </Button>
         </a>
 
         <Button variant="contained" component="label">
-          <FileUpload fontSize="small"/>
-          <span style={{ marginLeft: '8px' }}>
-            Json
-          </span>
-          <input type="file" hidden onChange={(e) => getFile(e)} />
+          <FileUpload fontSize="small" />
+          <span style={{ marginLeft: "8px" }}>Json</span>
+          <input
+            type="file"
+            hidden
+            accept=".json,application/json"
+            onChange={(e) => getFile(e)}
+          />
         </Button>
 
         <Button
-          variant={!(file && (file as any)?.name) ? "outlined" : "contained"}
+          variant={!hasJson ? "outlined" : "contained"}
           component="label"
           color="success"
           style={
-            !(file && (file as any)?.name)
+            !hasJson
               ? {
                   backgroundColor: "#888788",
                   color: "#111",
@@ -81,18 +109,18 @@ export default function InputFile() {
                 }
               : ({} as any)
           }
-          disabled={!(file && (file as any)?.name)}
+          disabled={!hasJson}
         >
           Estilizar
         </Button>
       </div>
       <div className="flex flex-row-reverse mt-2">
         <Button
-          variant={!(file && (file as any)?.name) ? "outlined" : "contained"}
+          variant={!hasJson ? "outlined" : "contained"}
           component="label"
           color="success"
           style={
-            !(file && (file as any)?.name)
+            !hasJson
               ? {
                   backgroundColor: "#888788",
                   color: "#111",
@@ -101,12 +129,10 @@ export default function InputFile() {
                 }
               : ({} as any)
           }
-          disabled={!(file && (file as any)?.name)}
+          disabled={!hasJson}
         >
-          <Download fontSize="small"/>
-          <span style={{ marginLeft: '8px' }}>
-            Json novo
-          </span>
+          <Download fontSize="small" />
+          <span style={{ marginLeft: "8px" }}>Json novo</span>
         </Button>
       </div>
     </div>
