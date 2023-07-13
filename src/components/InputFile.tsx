@@ -6,6 +6,7 @@ import { editJson } from "../util/editJson";
 
 export default function InputFile() {
   const [file, setFile] = useState({ file: {}, name: "" }) as any;
+  const [newFile, setNewFile] = useState() as any;
   const [hasJson, setHasJson] = useState();
 
   useEffect(() => {
@@ -54,6 +55,10 @@ export default function InputFile() {
     )}`;
   };
 
+  const styleJson = () => {
+    const jsonEdited = editJson(file.file);
+    setNewFile(jsonEdited);
+  };
 
   return (
     <div className="flex flex-col">
@@ -99,6 +104,7 @@ export default function InputFile() {
           variant={!hasJson ? "outlined" : "contained"}
           component="label"
           color="success"
+          onClick={styleJson}
           style={
             !hasJson
               ? {
@@ -115,25 +121,32 @@ export default function InputFile() {
         </Button>
       </div>
       <div className="flex flex-row-reverse mt-2">
-        <Button
-          variant={!hasJson ? "outlined" : "contained"}
-          component="label"
-          color="success"
-          style={
-            !hasJson
-              ? {
-                  backgroundColor: "#888788",
-                  color: "#111",
-                  cursor: "not-allowed",
-                  pointerEvents: "all !important",
-                }
-              : ({} as any)
-          }
-          disabled={!hasJson}
+        <a
+          href={exportJSON(newFile)}
+          download="new_json.json"
+          target="_blank"
+          rel="noreferrer"
         >
-          <Download fontSize="small" />
-          <span style={{ marginLeft: "8px" }}>Json novo</span>
-        </Button>
+          <Button
+            variant={!(hasJson && newFile) ? "outlined" : "contained"}
+            component="label"
+            color="success"
+            style={
+              !(hasJson && newFile)
+                ? {
+                    backgroundColor: "#888788",
+                    color: "#111",
+                    cursor: "not-allowed",
+                    pointerEvents: "all !important",
+                  }
+                : ({} as any)
+            }
+            disabled={!(hasJson && newFile)}
+          >
+            <Download fontSize="small" />
+            <span style={{ marginLeft: "8px" }}>Json novo</span>
+          </Button>
+        </a>
       </div>
     </div>
   );
