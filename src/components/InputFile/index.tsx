@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { Download, FileUpload } from "@mui/icons-material";
-import { editJson } from "../util/editJson";
+import { editJson } from "../../util/editJson";
 
 export default function InputFile() {
   const [file, setFile] = useState({ file: {}, name: "" }) as any;
