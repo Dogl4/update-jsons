@@ -4,7 +4,7 @@ import "../globals.css";
 import PageBlocks from "@/components/PageBlocks";
 
 export const metadata: Metadata = {
-  title: "Modelo (Atualiza .json)",
+  title: "Blocos (Atualiza .json)",
 };
 
 export default function Page() {
