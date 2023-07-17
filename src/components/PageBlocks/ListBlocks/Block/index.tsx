@@ -1,7 +1,8 @@
 "use client";
+import { IBlock } from "@/util/Interfaces";
 import React from "react";
 
-export default function Block({ block }: any) {
+export default function Block({ block: { tag, shape, backgroundColor, textColor } }: any) {
   return (
     <a
       // href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
@@ -9,14 +10,14 @@ export default function Block({ block }: any) {
       target="_blank"
       rel="noopener noreferrer"
       style={{
-        borderRadius: "0 0 50% 50%",
-        backgroundColor: "#fff9c4",
-        color: "#000000",
+        borderRadius: shape,
+        backgroundColor: backgroundColor,
+        color: textColor,
         textAlign: "center",
       }}
     >
       <h2 className={`mb- text-2xl font-semibold`}>
-        [SELECT]{" "}
+        {tag.join(' ').toLocaleUpperCase()}{" "}
         <span className="inline-block transition-transform group-translate-x-1 motion-reduce:transform-none">
           - lorem ipsum
         </span>

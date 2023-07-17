@@ -1,4 +1,4 @@
-const editJson = (file = {}) => {
+const editJson = (file = {} as any) => {
   for (const block in file.flow) {
     const blockName = file.flow[block].$title.toLowerCase();
     if (blockName.includes("[select]")) {

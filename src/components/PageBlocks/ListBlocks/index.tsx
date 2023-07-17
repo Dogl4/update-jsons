@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import Block from "./Block";
+import { IBlock } from "@/util/Interfaces";
 
 export default function ListBlocks({ blocks }: any) {
   useEffect(() => {
@@ -8,8 +9,8 @@ export default function ListBlocks({ blocks }: any) {
   }, [blocks])
   return (
     <div style={{ display: "flex" }}>
-      {blocks?.length && blocks.map((e: any) => (
-        <Block key={e.name} block={e} />
+      {blocks?.length && blocks.map((block: IBlock, index: number) => (
+        <Block key={`key_block${index + 1}`} block={block} />
       ))}
     </div>
   );

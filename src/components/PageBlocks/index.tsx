@@ -1,17 +1,23 @@
 "use client";
-import React, { useState, KeyboardEvent, MouseEvent } from "react";
+import React, { useState, KeyboardEvent, MouseEvent, useEffect } from "react";
 import ButtonAddBlock from "../ButtonAddBlock";
 import ListBlocks from "./ListBlocks";
 import EditInfos from "./EditInfos";
+import { hasFirstContact, readLocalStorage } from "@/util/localStorage";
 
 type Anchor = "bottom";
 
 export default function PageBlocks({ blocks }: any) {
-  const [listBocks, setListBocks] = useState([
-    { name: "1" },
-    { name: "2" },
-  ]) as any;
+  const [listBocks, setListBocks] = useState() as any;
   const [state, setState] = React.useState({ bottom: false });
+  
+  useEffect(() => {
+    hasFirstContact();
+  }, []);
+
+  useEffect(() => {
+    setListBocks(readLocalStorage());
+  }, []);
 
   const openDrawer = () => {
     setState({ bottom: true });
