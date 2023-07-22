@@ -3,13 +3,22 @@ import React, { useState, KeyboardEvent, MouseEvent, useEffect } from "react";
 import ButtonAddBlock from "../ButtonAddBlock";
 import ListBlocks from "./ListBlocks";
 import EditInfos from "./EditInfos";
-import { hasFirstContact, readLocalStorage } from "@/util/localStorage";
+import { hasFirstContact, readLocalStorage, saveLocalStorage } from "@/util/localStorage";
+import { IBlocks } from "@/util/Interfaces";
 
 type Anchor = "bottom";
 
+const DEFAULT_BLOCK = {
+  tag: '',
+  shape: '0',
+  backgroundColor: '',
+  textColor: '',
+};
+
 export default function PageBlocks({ blocks }: any) {
   const [listBocks, setListBocks] = useState() as any;
-  const [state, setState] = React.useState({ bottom: false });
+  const [state, setState] = useState({ bottom: false });
+  const [styleBlock, setStyleBlock] = useState(DEFAULT_BLOCK);
   
   useEffect(() => {
     hasFirstContact();
@@ -28,8 +37,19 @@ export default function PageBlocks({ blocks }: any) {
   };
 
   const addBlock = () => {
-    setListBocks([...listBocks, { name: `${listBocks.length + 1}` }]);
+    const newList = [...listBocks, { ...styleBlock }];
+    setListBocks(newList);
+    saveLocalStorage(newList as any);
+    setStyleBlock(DEFAULT_BLOCK);
   };
+
+  const onDelete = (currentTag = null as any) => {
+    if (currentTag) {
+      const listList = listBocks.filter((e: any) => e.tag.toLocaleUpperCase() !== currentTag.toLocaleUpperCase())
+      setListBocks(listList);
+      saveLocalStorage(listList as any);
+    }
+  }
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) => (event: KeyboardEvent | MouseEvent) => {
@@ -47,12 +67,14 @@ export default function PageBlocks({ blocks }: any) {
   return (
     <>
       <ButtonAddBlock openDrawer={openDrawer} />
-      <ListBlocks blocks={listBocks} />
+      <ListBlocks blocks={listBocks} onDelete={onDelete} />
       <EditInfos
         open={state}
         toggleDrawer={toggleDrawer}
         addBlock={addBlock}
         closeDrawer={closeDrawer}
+        styleBlock={styleBlock}
+        setStyleBlock={setStyleBlock}
       />
     </>
   );

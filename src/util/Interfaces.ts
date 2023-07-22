@@ -1,5 +1,5 @@
 export type IBlock = {
-  tag: string[];
+  tag: string;
   shape: string;
   backgroundColor: string;
   textColor: string;

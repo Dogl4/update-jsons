@@ -25,3 +25,33 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.format-block {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+}
+
+@media only screen and (max-width: 940px) {
+  .format-block {
+    grid-template-columns: auto auto auto auto;
+  }
+}
+
+@media only screen and (max-width: 810px) {
+  .format-block {
+    grid-template-columns: auto auto auto;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .format-block {
+    grid-template-columns: auto auto;
+  }
+}
+
+@media only screen and (max-width: 410px) {
+  /* For tablets: */
+  .format-block {
+    grid-template-columns: auto;
+  }
+}
