@@ -5,6 +5,7 @@ import {
   Divider,
   Drawer,
   IconButton,
+  Input,
   List,
   ListItemButton,
   ListItemText,
@@ -64,8 +65,6 @@ export default function EditInfos({
         <List>
           {[
             { title: "Tag", description: "[SELECT]", value: 'tag' },
-            { title: "Cor de fundo", description: "#555", value: 'backgroundColor' },
-            { title: "Cor do texto", description: "#555", value: 'textColor' }
           ].map(({ title, description, value }) => (
             <>
               <TextField
@@ -80,6 +79,24 @@ export default function EditInfos({
               <Divider />
             </>
           ))}
+          {
+            [{ title: "Cor de fundo", value: 'backgroundColor' },
+            { title: "Cor do texto", value: 'textColor' }
+          ].map(({ title, value }) => (
+            <>
+              <div key={title} style={{ display: 'grid', gridTemplateColumns: 'auto auto' }}>
+                <h2 style={{ marginLeft: '16px' }}>{title}</h2>
+                <Input
+                  type="color"
+                  value={styleBlock[value]}
+                  sx={{ width: '100px' }}
+                  onChange={(e: any) => setStyleBlock({ ...styleBlock, [value]: e.target.value })}
+                  />
+              </div>
+              <Divider />
+            </>
+          ))
+          }
         </List>
 
         <ListItemButton onClick={handleClick}>
