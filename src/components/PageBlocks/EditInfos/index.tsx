@@ -15,7 +15,7 @@ import {
   Tooltip,
   styled,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
@@ -44,8 +44,17 @@ export default function EditInfos({
   const [open, setOpen] = useState(true);
   const [alignment, setAlignment] = useState(styleBlock.shape);
   const handleClick = () => {
+
     setOpen(!open);
   };
+
+  useEffect(() => {
+    if (state.isEdit) {
+      const currentShape = styleBlock.shape || '0';
+      setAlignment(currentShape);
+      setStyleBlock({ ...styleBlock, shape: currentShape })
+    }
+  }, [state])
 
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -112,7 +121,7 @@ export default function EditInfos({
             aria-label="Platform"
             className="format-block"
           >
-            <ToggleButtonEdit color="success" value="0" style={{ border: '3px solid black', margin: "20px", borderRadius: '0 0 0 0', width: '75px', height: '50px' }}></ToggleButtonEdit>
+            <ToggleButtonEdit color="success" value="0" style={{ border: '3px solid black', margin: "20px", borderRadius: '0', width: '75px', height: '50px' }}></ToggleButtonEdit>
             <ToggleButtonEdit value="0 0 50% 50%" style={{ border: '3px solid black', margin: "20px", borderRadius: '0 0 50% 50%', width: '75px', height: '50px' }}></ToggleButtonEdit>
             <ToggleButtonEdit value="50% 50% 0 0" style={{ border: '3px solid black', margin: "20px", borderRadius: '50% 50% 0 0', width: '75px', height: '50px' }}></ToggleButtonEdit>
             <ToggleButtonEdit value="0 50% 50% 0" style={{ border: '3px solid black', margin: "20px", borderRadius: '0 50% 50% 0', width: '75px', height: '50px' }}></ToggleButtonEdit>
