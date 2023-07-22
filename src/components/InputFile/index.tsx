@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { Download, FileUpload } from "@mui/icons-material";
-import { editJson } from "../util/editJson";
+import { styledJson } from "../../util/editJson";
+import { hasFirstContact, readLocalStorage } from "@/util/localStorage";
 
 export default function InputFile() {
   const [file, setFile] = useState({ file: {}, name: "" }) as any;
@@ -10,7 +11,10 @@ export default function InputFile() {
   const [hasJson, setHasJson] = useState();
 
   useEffect(() => {
-    console.log("file", file as any);
+    hasFirstContact();
+  }, []);
+
+  useEffect(() => {
     setHasJson(file.file && Object.values(file.file).length);
   }, [file]);
 
@@ -56,7 +60,8 @@ export default function InputFile() {
   };
 
   const styleJson = () => {
-    const jsonEdited = editJson(file.file);
+    const currentStyle = readLocalStorage();
+    const jsonEdited = styledJson(currentStyle, file.file);
     setNewFile(jsonEdited);
   };
 
