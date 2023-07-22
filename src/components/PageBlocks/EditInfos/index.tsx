@@ -125,7 +125,7 @@ export default function EditInfos({
       <Tooltip title="Adicionar mais blocos">
         <IconButton
           sx={{ "&:hover": { backgroundColor: "#11a811", color: "#333" }, borderRadius: "6px", width: '100%', marginBottom: '16px' }}
-          onClick={() => { addBlock(), closeDrawer() } }
+          onClick={() => { addBlock() } }
         >
           Salvar
         </IconButton>

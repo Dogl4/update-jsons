@@ -1,17 +1,22 @@
 "use client";
-import { saveLocalStorage } from "@/util/localStorage";
-import { Delete } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import React from "react";
 
 export default function Block({
   block: { tag, shape, backgroundColor, textColor },
-  onDelete
+  onDelete,
+  onEditBlock
 }: any) {
 
 
   return (
     <div style={{ position: 'relative', marginTop: '24px' }}>
+      <Tooltip title="Edita este estilo de bloco" style={{ position: 'absolute', top: '-24px', right: '39px' }}>
+        <IconButton sx={{ "&:hover": { backgroundColor: "#111" } }} onClick={() => onEditBlock(tag) }>
+          <Edit color="info" />
+        </IconButton>
+      </Tooltip>
       <Tooltip title="Deletar este estilo de bloco" style={{ position: 'absolute', top: '-24px', right: '9px' }}>
         <IconButton sx={{ "&:hover": { backgroundColor: "#111" } }} onClick={() => onDelete(tag) }>
           <Delete color="error" />
