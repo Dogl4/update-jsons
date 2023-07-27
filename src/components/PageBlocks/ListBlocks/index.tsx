@@ -7,7 +7,7 @@ export default function ListBlocks({ blocks, onDelete, onEditBlock }: any) {
   return blocks?.length ? (
     <div className="format-block">
       {blocks.map((block: IBlock, index: number) => (
-        <Block key={`key_block${index + 1}`} block={block} onDelete={onDelete} onEditBlock={onEditBlock} />
+        <Block key={`key_block${index + 1}`} block={{ ...block, index }} onDelete={onDelete} onEditBlock={onEditBlock} />
       ))}
     </div>
   ) : null;

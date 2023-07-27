@@ -4,7 +4,7 @@ import { IconButton, Tooltip } from "@mui/material";
 import React from "react";
 
 export default function Block({
-  block: { tag, shape, backgroundColor, textColor },
+  block: { tag, shape, backgroundColor, textColor, index },
   onDelete,
   onEditBlock
 }: any) {
@@ -13,12 +13,12 @@ export default function Block({
   return (
     <div style={{ position: 'relative', marginTop: '24px' }}>
       <Tooltip title="Edita este estilo de bloco" style={{ position: 'absolute', top: '-24px', right: '39px' }}>
-        <IconButton sx={{ "&:hover": { backgroundColor: "#111" } }} onClick={() => onEditBlock(tag) }>
+        <IconButton sx={{ "&:hover": { backgroundColor: "#111" } }} onClick={() => onEditBlock(index) }>
           <Edit color="info" />
         </IconButton>
       </Tooltip>
       <Tooltip title="Deletar este estilo de bloco" style={{ position: 'absolute', top: '-24px', right: '9px' }}>
-        <IconButton sx={{ "&:hover": { backgroundColor: "#111" } }} onClick={() => onDelete(tag) }>
+        <IconButton sx={{ "&:hover": { backgroundColor: "#111" } }} onClick={() => onDelete(index) }>
           <Delete color="error" />
         </IconButton>
       </Tooltip>
@@ -37,7 +37,7 @@ export default function Block({
         }}
       >
         <h2 className="font-semibold" style={{ fontSize: "19px" }}>
-          {tag.toLocaleUpperCase()}{" "}
+          {tag?.toLocaleUpperCase()}{" "}
           <span className="inline-block transition-transform group-translate-x-1 motion-reduce:transform-none">
             - lorem ipsum
           </span>

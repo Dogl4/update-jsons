@@ -4,7 +4,6 @@ import ButtonAddBlock from "../ButtonAddBlock";
 import ListBlocks from "./ListBlocks";
 import EditInfos from "./EditInfos";
 import { hasFirstContact, readLocalStorage, saveLocalStorage } from "@/util/localStorage";
-import { IBlocks } from "@/util/Interfaces";
 
 type Anchor = "bottom";
 
@@ -19,7 +18,7 @@ export default function PageBlocks({ blocks }: any) {
   const [listBocks, setListBocks] = useState() as any;
   const [state, setState] = useState({ bottom: false, isEdit: false });
   const [styleBlock, setStyleBlock] = useState(DEFAULT_BLOCK);
-  const [tagToEdit, setTagToEdit] = useState(null) as any;
+  const [indexToEdit, setIndexToEdit] = useState(null) as any;
   
   useEffect(() => {
     hasFirstContact();
@@ -40,9 +39,8 @@ export default function PageBlocks({ blocks }: any) {
 
   const addBlock = () => {
     let newList = [...listBocks];
-    if (state.isEdit && tagToEdit) {
-      const index = listBocks.findIndex(({ tag }: any) => tagToEdit.toLocaleUpperCase() === tag.toLocaleUpperCase())
-      listBocks[index] = styleBlock;
+    if (state.isEdit && indexToEdit >= 0) {
+      listBocks[indexToEdit] = styleBlock;
       newList = [...listBocks];
     } else {
       newList = [...listBocks, { ...styleBlock }];
@@ -51,23 +49,24 @@ export default function PageBlocks({ blocks }: any) {
     saveLocalStorage(newList as any);
     setStyleBlock(DEFAULT_BLOCK);
     closeDrawer();
-    setTagToEdit(null);
+    setIndexToEdit(null);
   };
 
-  const onDelete = (currentTag = null as any) => {
-    if (currentTag) {
-      const newList = listBocks.filter((e: any) => e.tag.toLocaleUpperCase() !== currentTag.toLocaleUpperCase())
+  const onDelete = (index = -1 as number) => {
+    if (index >= 0 && listBocks[index]) {
+      let newList = [...listBocks];
+      newList.splice(index, 1);
       setListBocks(newList);
       saveLocalStorage(newList as any);
     }
   }
 
-  const onEditBlock = (currentTag = null as any) => {
-    const listList = listBocks.find((e: any) => e.tag.toLocaleUpperCase() === currentTag.toLocaleUpperCase())
+  const onEditBlock = (index = -1 as number) => {
+    const listList = listBocks[index]
     if (listList) {
       setStyleBlock({ ...listList })
       openDrawer({ isEdit: true });
-      setTagToEdit(currentTag)
+      setIndexToEdit(index)
     }
   }
 
