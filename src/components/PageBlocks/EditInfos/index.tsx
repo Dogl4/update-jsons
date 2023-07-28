@@ -5,7 +5,6 @@ import {
   Divider,
   Drawer,
   IconButton,
-  Input,
   List,
   ListItemButton,
   ListItemText,
@@ -18,6 +17,7 @@ import {
 import React, { useEffect, useState } from "react";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import SketchPicker from './SketchPicker';
 
 const ToggleButtonGroupEdit = styled(ToggleButtonGroup)({
   backgroundColor: 'rgba(0, 0, 0, 0.06)',
@@ -37,7 +37,6 @@ export default function EditInfos({
   open: state,
   toggleDrawer,
   addBlock,
-  closeDrawer,
   styleBlock,
   setStyleBlock
 }: any) {
@@ -64,6 +63,10 @@ export default function EditInfos({
     setStyleBlock({ ...styleBlock, shape: newAlignment })
   };
 
+  const changeColorInInput = (event: any, valueType: string) => {
+    setStyleBlock({ ...styleBlock, [valueType]: event.target?.value });
+  };
+
   const list = (anchor: any) => (
     <div style={{ width: '80%', margin: '0 auto' }}>
       <Box
@@ -83,24 +86,35 @@ export default function EditInfos({
                 variant="filled"
                 placeholder={description}
                 value={styleBlock[value]}
-                onChange={(e) => setStyleBlock({ ...styleBlock, [value]: e.target.value })}
+                onChange={(e) => changeColorInInput(e, value)}
               />
               <Divider />
             </>
           ))}
           {
-            [{ title: "Cor de fundo", value: 'backgroundColor' },
-            { title: "Cor do texto", value: 'textColor' }
-          ].map(({ title, value }) => (
+            [{ title: "Cor de fundo", value: 'backgroundColor', cssColor: 'backgroundColor' },
+            { title: "Cor do texto", value: 'textColor', cssColor: 'color' }
+          ].map(({ title, value, cssColor }) => (
             <>
-              <div key={title} style={{ display: 'grid', gridTemplateColumns: 'auto auto' }}>
-                <h2 style={{ marginLeft: '16px' }}>{title}</h2>
-                <Input
-                  type="color"
-                  value={styleBlock[value]}
-                  sx={{ width: '100px' }}
-                  onChange={(e: any) => setStyleBlock({ ...styleBlock, [value]: e.target.value })}
-                  />
+              <div key={title} style={{ display: 'flex' }}>
+                <h2
+                  style={{
+                    margin: '0 8.2px',
+                    borderRadius: '3px',
+                    fontWeight: '400',
+                    padding: '0 8px',
+                    color: '#455',
+                    width: "112px",
+                    [cssColor]: styleBlock[value]
+                  }}
+                >
+                  {title}
+                </h2>
+                <SketchPicker
+                  value={value}
+                  styleBlock={styleBlock}
+                  setStyleBlock={setStyleBlock}
+                />
               </div>
               <Divider />
             </>
@@ -121,19 +135,21 @@ export default function EditInfos({
             aria-label="Platform"
             className="format-block"
           >
-            <ToggleButtonEdit color="success" value="0" style={{ border: '3px solid black', margin: "20px", borderRadius: '0', width: '75px', height: '50px' }}></ToggleButtonEdit>
-            <ToggleButtonEdit value="0 0 50% 50%" style={{ border: '3px solid black', margin: "20px", borderRadius: '0 0 50% 50%', width: '75px', height: '50px' }}></ToggleButtonEdit>
+            <ToggleButtonEdit value="50%" style={{ border: '3px solid black', margin: "20px", borderRadius: '50%', width: '75px', height: '50px' }}></ToggleButtonEdit>
             <ToggleButtonEdit value="50% 50% 0 0" style={{ border: '3px solid black', margin: "20px", borderRadius: '50% 50% 0 0', width: '75px', height: '50px' }}></ToggleButtonEdit>
+            <ToggleButtonEdit value="0 0 50% 50%" style={{ border: '3px solid black', margin: "20px", borderRadius: '0 0 50% 50%', width: '75px', height: '50px' }}></ToggleButtonEdit>
             <ToggleButtonEdit value="0 50% 50% 0" style={{ border: '3px solid black', margin: "20px", borderRadius: '0 50% 50% 0', width: '75px', height: '50px' }}></ToggleButtonEdit>
             <ToggleButtonEdit value="50% 0 0 50%" style={{ border: '3px solid black', margin: "20px", borderRadius: '50% 0 0 50%', width: '75px', height: '50px' }}></ToggleButtonEdit>
-            <ToggleButtonEdit value="50%" style={{ border: '3px solid black', margin: "20px", borderRadius: '50%', width: '75px', height: '50px' }}></ToggleButtonEdit>
+            <ToggleButtonEdit value="0 50% 0 50%" style={{ border: '3px solid black', margin: "20px", borderRadius: '0 50% 0 50%', width: '75px', height: '50px' }}></ToggleButtonEdit>
+            <ToggleButtonEdit value="50% 0 50% 0" style={{ border: '3px solid black', margin: "20px", borderRadius: '50% 0 50% 0', width: '75px', height: '50px' }}></ToggleButtonEdit>
+            <ToggleButtonEdit color="success" value="0" style={{ border: '3px solid black', margin: "20px", borderRadius: '0', width: '75px', height: '50px' }}></ToggleButtonEdit>
           </ToggleButtonGroupEdit>
         </Collapse>
       </Box>
 
       <Tooltip title="Adicionar mais blocos">
         <IconButton
-          sx={{ "&:hover": { backgroundColor: "#11a811", color: "#333" }, borderRadius: "6px", width: '100%', marginBottom: '16px' }}
+          sx={{ "&:hover": { backgroundColor: "#11a811", color: "#333" }, borderRadius: "6px", width: '100%', marginBottom: '160px' }}
           onClick={() => { addBlock() } }
         >
           Salvar
